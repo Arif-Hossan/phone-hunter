@@ -88,17 +88,45 @@ const loadPhoneDetail = async (id) => {
   displayPhoneDetail(data.data);
 };
 // display phone details in modal
-const displayPhoneDetail=phone=>{
-console.log(phone);
-const modalTitle=document.getElementById('phoneDetailsModalLabel');
-modalTitle.innerText= `${phone.name}`;
-const phoneDetailBody=document.getElementById('phone-detail');
-phoneDetailBody.innerHTML=`
-<p>Release Date : ${phone.releaseDate?phone.releaseDate:"Not Found"}</p>
+const displayPhoneDetail = (phone) => {
+  console.log(phone);
+  //get array (sensors data)
+  const sensors = phone.mainFeatures.sensors
+    ? phone.mainFeatures.sensors
+    : "No Sensor";
+    // create sensor item list
+   let sensorItem=``;
+   sensors.forEach(sensor => {
+    sensorItem+=`<li>${sensor}</li>`;
+
+   });
+  console.log(sensors);
+  const modalTitle = document.getElementById("phoneDetailsModalLabel");
+  modalTitle.innerText = `${phone.name}`;
+  const phoneDetailBody = document.getElementById("phone-detail");
+  phoneDetailBody.innerHTML = `
+<p>Release Date : ${phone.releaseDate ? phone.releaseDate : "Not Found"}</p>
 <!--This line dot notation is wrong so this will show not found for result and no data if others is not available
-<p>Bluetooth : ${phone.others?phone.others?.bluetooth?phone.others.bluetooth:"Not Found":"No Data"}</p>
+<p>Bluetooth : ${
+    phone.others
+      ? phone.others?.bluetooth
+        ? phone.others.bluetooth
+        : "Not Found"
+      : "No Data"
+  }</p>
 -->
-<p>Bluetooth : ${phone.others?phone.others?.Bluetooth?phone.others.Bluetooth:"Not Found":"No Data"}</p>`
-}
+<p>Bluetooth : ${
+    phone.others
+      ? phone.others?.Bluetooth
+        ? phone.others.Bluetooth
+        : "Not Found"
+      : "No Data"
+  }</p>
+<p>Sensors :</p>
+<ul>
+${sensorItem}
+</ul>
+`;
+};
 // call load phones function
-loadPhones('phone');
+loadPhones("phone");
