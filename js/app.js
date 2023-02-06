@@ -55,6 +55,12 @@ const processSearch = (dataLimit) => {
 document.getElementById("btn-search").addEventListener("click", function () {
   processSearch(10);
 });
+// search handle using enter button
+document.getElementById('searchField').addEventListener('keypress',function(event){
+  if (event.key=='Enter'){
+    processSearch(10);
+  }
+})
 // handle loader
 const toggleSpinner = (isLoading) => {
   const loader = document.getElementById("loader");

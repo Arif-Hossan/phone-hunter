@@ -19,7 +19,7 @@
   <body class="container">
     <h1>Welcome to the phone hunter</h1>
     <section>
-
+        <!-- search container -->
         <div class="mb-3 d-flex">
           <input type="text" class="form-control w-50" id="searchField"/>
           <button id="btn-search" class="btn btn-primary">Search</button>
@@ -30,6 +30,7 @@
       <!-- not found message -->
       <h5 id="not-found" class="text-warning d-none mt-4">Not Found, Please try again</h5>
     </section>
+    <!-- spinner -->
     <section id="loader" class="d-none">
         <div style="height:400px" class="d-flex justify-content-center align-items-center">
             <div class="spinner-border text-success" role="status">
@@ -37,6 +38,7 @@
             </div>
           </div>
     </section>
+    <!-- show all -->
     <section id="show-all" class="text-center d-none mt-2">
       <button id="btn-show-all" class="btn btn-primary">Show All</button>
     </section>
