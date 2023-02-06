@@ -1,10 +1,10 @@
-const loadPhones = async (searchText,dataLimit) => {
+const loadPhones = async (searchText, dataLimit) => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const res = await fetch(url);
   const data = await res.json();
-  displayPhones(data.data,dataLimit);
+  displayPhones(data.data, dataLimit);
 };
-const displayPhones = (phones,dataLimit) => {
+const displayPhones = (phones, dataLimit) => {
   const phonesContainer = document.getElementById("phones-container");
   phonesContainer.textContent = ``;
   //search result title
@@ -34,8 +34,11 @@ const displayPhones = (phones,dataLimit) => {
             <img src="${phone.image}" class="card-img-top p-5" alt="..." />
             <div class="card-body">
               <h5 class="card-title">${phone.phone_name}</h5>
-              <p class="card-text">${phone.brand}</p>
-              <p class="card-text text-muted">${phone.slug}</p>
+              <p class="card-text text-muted">Brand : ${phone.brand}</p>
+              <div class="text-center">
+              <a onclick="loadPhoneDetail('${phone.slug}')" data-bs-toggle="modal" data-bs-target="#phoneDetailsModal" class="btn btn-success bg-opacity-25">Details</a>
+              </div>
+
             </div>
           </div>`;
     phonesContainer.appendChild(phoneDiv);
@@ -49,18 +52,20 @@ const processSearch = (dataLimit) => {
   toggleSpinner(true);
   const searchField = document.getElementById("searchField");
   const searchText = searchField.value;
-  loadPhones(searchText,dataLimit);
+  loadPhones(searchText, dataLimit);
 };
 // handle button control
 document.getElementById("btn-search").addEventListener("click", function () {
   processSearch(10);
 });
 // search handle using enter button
-document.getElementById('searchField').addEventListener('keypress',function(event){
-  if (event.key=='Enter'){
-    processSearch(10);
-  }
-})
+document
+  .getElementById("searchField")
+  .addEventListener("keypress", function (event) {
+    if (event.key == "Enter") {
+      processSearch(10);
+    }
+  });
 // handle loader
 const toggleSpinner = (isLoading) => {
   const loader = document.getElementById("loader");
@@ -72,6 +77,28 @@ const toggleSpinner = (isLoading) => {
 };
 // show all handle ,this is not the best approach
 document.getElementById("btn-show-all").addEventListener("click", function () {
-    processSearch();
-  });
-// loadPhones();
+  processSearch();
+});
+
+//  load phone details
+const loadPhoneDetail = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  displayPhoneDetail(data.data);
+};
+// display phone details in modal
+const displayPhoneDetail=phone=>{
+console.log(phone);
+const modalTitle=document.getElementById('phoneDetailsModalLabel');
+modalTitle.innerText= `${phone.name}`;
+const phoneDetailBody=document.getElementById('phone-detail');
+phoneDetailBody.innerHTML=`
+<p>Release Date : ${phone.releaseDate?phone.releaseDate:"Not Found"}</p>
+<!--This line dot notation is wrong so this will show not found for result and no data if others is not available
+<p>Bluetooth : ${phone.others?phone.others?.bluetooth?phone.others.bluetooth:"Not Found":"No Data"}</p>
+-->
+<p>Bluetooth : ${phone.others?phone.others?.Bluetooth?phone.others.Bluetooth:"Not Found":"No Data"}</p>`
+}
+// call load phones function
+loadPhones('phone');
