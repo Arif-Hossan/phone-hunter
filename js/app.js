@@ -18,10 +18,10 @@ const displayPhones = (phones, dataLimit) => {
   } else {
     notFoundMessage.classList.add("d-none");
   }
-  //display only 10 phones only
+  //display only 12 phones only
   const showAll = document.getElementById("show-all");
   if (dataLimit && phones.length > 10) {
-    phones = phones.slice(0, 10);
+    phones = phones.slice(0, 12);
     showAll.classList.remove("d-none");
   } else {
     showAll.classList.add("d-none");
@@ -56,7 +56,7 @@ const processSearch = (dataLimit) => {
 };
 // handle button control
 document.getElementById("btn-search").addEventListener("click", function () {
-  processSearch(10);
+  processSearch(12);
 });
 // search handle using enter button
 document
